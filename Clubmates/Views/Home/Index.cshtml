@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Clubmates.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <h1>Student Details</h1>
+</div>
+@foreach (var stu in Model)
+{
+    <div>
+        Name: @stu.StudentName <br />
+        ID: @stu.StudentID <br />
+        Date of Birth: @stu.DateOfBirth <br />
+        Age: @DateTime.Now - @stu.DateOfBirth
+        @{
+            var age = DateTime.Now.Year - stu.DateOfBirth.Year;
+        }
+        Age: @age;
+        Height: @stu.Height <br />
+        Weight: @stu.Weight
+
+    </div>
+}
+<a href="/Home/AddStudent">Add Student</a>
+
