@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Clubmates.Web.Models.AccountViewModel.UserViewModel>
+
+@{
+    ViewBag.Title = "Manage Users";
+}
+@if(Model != null && Model.Any()){
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>
+                        <td>
+                            <a asp-controller="Account" asp-action="EditUser" asp-route-email="@user.Email" class="btn btn-primary">Edit</a>
+                            <a asp-controller="Account" asp-action="DeleteUser" asp-route-email="@user.Email" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}else
+{
+    <div class="alert alert-info" role="alert">
+        No users found
+    </div>
+}
