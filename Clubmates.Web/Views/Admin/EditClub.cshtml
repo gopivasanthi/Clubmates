@@ -1,0 +1,52 @@
+﻿@model Clubmates.Web.Models.AdminViewModel.ClubViewModel
+@{
+    ViewBag.Title = "Update club";
+}
+<div class="form-container">
+    <form class="form" asp-action="EditClub" asp-controller="Admin" method="post">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <input type="hidden" id="ClubId" name="ClubId" value="@Model.ClubId" />
+        <div class="form-group">
+            <label for="ClubName">Club Name</label>
+            <input type="text" class="form-control" id="ClubName" name="ClubName" value="@Model.ClubName">
+        </div>
+        <div class="form-group">
+            <label for="ClubDescription">Club Description</label>
+            <input type="text" class="form-control" id="ClubDescription" name="ClubDescription" value="@Model.ClubDescription">
+        </div>
+        <div class="form-group">
+            <label for="ClubCategory">Club Category</label>
+            @Html.DropDownListFor(
+                     x => x.ClubCategory,
+                     Model.ClubCategories,
+                     "Select a category",
+                     new { @id = "ClubCategory", @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label for="ClubType">Club Type</label>
+            @Html.DropDownListFor(
+                     x => x.ClubType,
+                     Model.ClubTypes,
+                     "Select a type",
+                     new { @id = "ClubType", @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label for="ClubManager">Club Manager Email</label>
+            <input type="text" class="form-control" id="ClubManager" name="ClubManager" value="@Model.ClubManager">
+        </div>
+        <div class="form-group">
+            <label for="ClubRules">Club Rules</label>
+            <input type="text" class="form-control" id="ClubRules" name="ClubRules" value="@Model.ClubRules">
+        </div>
+        <div class="form-group">
+            <label for="ClubContactNumber">Club Contact Number</label>
+            <input type="text" class="form-control" id="ClubContactNumber" name="ClubContactNumber" value="@Model.ClubContactNumber">
+        </div>
+        <div class="form-group">
+            <label for="ClubEmail">Club Email</label>
+            <input type="text" class="form-control" id="ClubEmail" name="ClubEmail" value="@Model.ClubEmail">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
