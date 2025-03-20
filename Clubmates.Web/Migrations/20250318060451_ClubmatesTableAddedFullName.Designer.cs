@@ -4,6 +4,7 @@ using Clubmates.Web.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clubmates.Web.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250318060451_ClubmatesTableAddedFullName")]
+    partial class ClubmatesTableAddedFullName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,32 +72,6 @@ namespace Clubmates.Web.Migrations
                     b.HasIndex("ClubManagerId");
 
                     b.ToTable("Clubs");
-                });
-
-            modelBuilder.Entity("Clubmates.Web.Models.ClubAccess", b =>
-                {
-                    b.Property<int>("ClubAccessId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClubAccessId"));
-
-                    b.Property<int?>("ClubAccessRole")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClubId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClubmatesUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ClubAccessId");
-
-                    b.HasIndex("ClubId");
-
-                    b.HasIndex("ClubmatesUserId");
-
-                    b.ToTable("ClubAccesses");
                 });
 
             modelBuilder.Entity("Clubmates.Web.Models.ClubmatesUser", b =>
@@ -323,21 +300,6 @@ namespace Clubmates.Web.Migrations
                         .HasForeignKey("ClubManagerId");
 
                     b.Navigation("ClubManager");
-                });
-
-            modelBuilder.Entity("Clubmates.Web.Models.ClubAccess", b =>
-                {
-                    b.HasOne("Clubmates.Web.Models.Club", "Club")
-                        .WithMany()
-                        .HasForeignKey("ClubId");
-
-                    b.HasOne("Clubmates.Web.Models.ClubmatesUser", "ClubmatesUser")
-                        .WithMany()
-                        .HasForeignKey("ClubmatesUserId");
-
-                    b.Navigation("Club");
-
-                    b.Navigation("ClubmatesUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

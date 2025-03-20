@@ -31,7 +31,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     max-width: 400px;
-    opacity:.8;
+    opacity: .8;
 }
 
 .form-container {
@@ -40,9 +40,11 @@ body {
     display: flex;
     animation: zoomOut 1.5s ease-in-out;
 }
-main{
-    padding-top:40px;
+
+main {
+    padding-top: 40px;
 }
+
 @keyframes zoomOut {
     from {
         transform: scale(0);
@@ -57,8 +59,8 @@ main{
     padding: 4px 7px 10px 4px;
 }
 
-.row{
-    padding-bottom:20px;
+.row {
+    padding-bottom: 20px;
 }
 
 .card {
@@ -67,11 +69,17 @@ main{
     animation: zoomOut 1.5s ease-in-out;
     border-radius: 10px;
 }
+
 .btn-primary {
     border-radius: 12px;
     background-color: #ffc107;
 }
+
     .btn-primary:hover {
         border-radius: 20px;
         background-color: #d7930b;
     }
+
+.clubbutton {
+    width: 20%;
+}

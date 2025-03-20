@@ -2,6 +2,7 @@ using Clubmates.Web.AppDbContext;
 using Clubmates.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Blazor;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +67,10 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "Club",
+    pattern: "Club/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

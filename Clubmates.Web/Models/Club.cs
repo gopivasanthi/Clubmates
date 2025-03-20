@@ -15,6 +15,9 @@ namespace Clubmates.Web.Models
         public ClubmatesUser? ClubManager { get; set; }
         public string? ClubContactNumber { get; set; }
         public string? ClubEmail { get; set; }
+        public byte[]? ClubLogo { get; set; }
+        public byte[]? ClubBanner { get; set; }
+        public byte[]? ClubBackground { get; set; }
 
     }
     public enum ClubCategory

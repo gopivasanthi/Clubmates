@@ -1,0 +1,13 @@
+﻿@model Clubmates.Web.Models.ClubsViewModel.CustomerClubViewModel
+@{
+    ViewData["Title"] = "Club Details";
+    ViewData["ClubName"] = Model.ClubName;
+    Layout = "~/Views/Shared/_ClubLayout.cshtml";
+}
+<h1>@Model.ClubName</h1>
+<p>@Model.ClubDescription</p>
+<p>@Model.ClubEmail</p>
+<p>@Model.ClubContactNumber</p>
+<p>@Model.ClubCategory</p>
+<p>@Model.ClubType</p>
+<input type="hidden" id="ClubId" name="ClubId" value="@Model.ClubId" />

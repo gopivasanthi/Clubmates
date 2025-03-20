@@ -4,6 +4,7 @@ namespace Clubmates.Web.Models
 {
     public class ClubmatesUser : IdentityUser
     {
+        public string? FullName { get; set; }
         public ClubmatesRole ClubmatesRole { get; set; }
         public ClubmatesProficiency ClubmatesProficiency { get; set; }
         public string? AddressLine1 { get; set; } = string.Empty;
@@ -16,9 +17,7 @@ namespace Clubmates.Web.Models
     {
         User,
         Guest,
-        ClubMember,
-        ClubManager,
-        ClubAdmin,
+        ClubUser,
         SuperAdmin
     }
     public enum ClubmatesProficiency
