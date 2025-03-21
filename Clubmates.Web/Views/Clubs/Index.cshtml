@@ -43,9 +43,12 @@
                             </a>
                             @if (club?.ClubType == 0)
                             {
-                                <a asp-action="ClubDetails"
-                                   asp-controller="Clubs"
-                                   asp-route-clubId="@club?.ClubId"
+                                <a 
+                                    asp-area="Club"
+                                    asp-action="Index"
+                                    asp-controller="Home"
+                                    asp-route-clubId="@club?.ClubId"
+                                    asp-route-returnUrl = "Clubs/Index"
                                    class="btn btn-primary clubbutton">Visit Club</a>
                             }
                         </div>
