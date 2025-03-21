@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Club\Data\" />
-    <Folder Include="Areas\Club\Models\" />
   </ItemGroup>
 
 </Project>

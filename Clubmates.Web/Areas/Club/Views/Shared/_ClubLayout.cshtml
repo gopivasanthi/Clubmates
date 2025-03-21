@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Clubmates.Web.Areas.Club.Models
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @ViewData["ClubName"]</title>
+    <title>@ViewData["Title"] - Clubmates</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Clubmates.Web.styles.css" asp-append-version="true" />
@@ -40,9 +41,50 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a asp-controller="Clubs" asp-action="ClubDetails" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a asp-controller="Clubs" asp-action="Events" class="nav-link px-2 text-white">Events</a></li>
-                    <li><a asp-controller="Clubs" asp-action="Manage" class="nav-link px-2 text-white">Manage</a></li>
+                    @if (ViewBag.MainMenuItems is List<MainMenu> mainMenuItems)
+                    {
+                        foreach (var menu in mainMenuItems)
+                        {
+                            <li>
+                                <a asp-area=@menu.MenuArea
+                                   asp-controller=@menu.MenuController
+                                   asp-action=@menu.MenuAction
+                                   asp-route-clubId=@menu.ClubId
+                                   class="nav-link px-2 text-white">
+                                    @menu.MenuTitle
+                                </a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            <a
+                            asp-area="Club"
+                            asp-controller="Home" 
+                            asp-action="Index" 
+                            class="nav-link px-2 text-secondary">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                            asp-area="Club"
+                            asp-controller="Events" 
+                            asp-action="Index" 
+                            class="nav-link px-2 text-white">
+                                Events
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Club"
+                            asp-controller="ManageClub"
+                            asp-action="Index"
+                            class="nav-link px-2 text-white">
+                                Manage
+                            </a>
+                        </li>
+                    }
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">

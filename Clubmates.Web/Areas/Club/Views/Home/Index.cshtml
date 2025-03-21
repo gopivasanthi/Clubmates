@@ -1,1 +1,14 @@
-﻿<h1>Welcome to the club</h1>
+﻿@model Clubmates.Web.Models.ClubsViewModel.CustomerClubViewModel
+@{
+    ViewBag.Title = "Home";
+    ViewBag.ClubName = @Model.ClubName;
+    Layout = ViewData["Layout"]?.ToString() ?? "";
+}
+
+<h1>@Model.ClubName</h1>
+<p>@Model.ClubDescription</p>
+<p>@Model.ClubEmail</p>
+<p>@Model.ClubContactNumber</p>
+<p>@Model.ClubCategory</p>
+<p>@Model.ClubType</p>
+<input type="hidden" id="ClubId" name="ClubId" value="@Model.ClubId" />
