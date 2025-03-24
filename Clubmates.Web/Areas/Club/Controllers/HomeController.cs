@@ -1,5 +1,6 @@
 ﻿using Clubmates.Web.AppDbContext;
 using Clubmates.Web.Areas.Club.Models;
+using Clubmates.Web.Areas.Club.Services;
 using Clubmates.Web.Models;
 using Clubmates.Web.Models.ClubsViewModel;
 using Microsoft.AspNetCore.Identity;
@@ -11,95 +12,30 @@ namespace Clubmates.Web.Areas.Club.Controllers
 {
     public class HomeController(
                     AppIdentityDbContext dbContext,
-                    UserManager<ClubmatesUser> userManager) : ClubBaseController
+                    IClubLayoutService clubLayoutService) : ClubBaseController
     {
         private readonly AppIdentityDbContext _dbContext = dbContext;
-        private readonly UserManager<ClubmatesUser> _userManager = userManager;
+        private readonly IClubLayoutService _clubLayoutService = clubLayoutService;
         public async Task<IActionResult> Index(int? clubId = 0)
         {
             if (!ModelState.IsValid)
                 return Redirect("/Clubs/Index");
-
             var club = await _dbContext
-                                .Clubs
-                                .Include(x => x.ClubManager)
-                                .FirstOrDefaultAsync(x => x.ClubId == clubId);
+                            .Clubs
+                            .Include(x => x.ClubManager)
+                            .FirstOrDefaultAsync(x => x.ClubId == clubId);
 
             var loggedInUserEmail = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
             if (loggedInUserEmail == null)
                 return Redirect("/Account/Login");
-
-            var clubuser = _userManager.FindByEmailAsync(loggedInUserEmail);
-            if (clubuser == null)
+            if (await _clubLayoutService.ValidateClubUser(loggedInUserEmail))
                 return Redirect("/Account/Login");
 
-            var clubAccess = await _dbContext
-                                      .ClubAccesses
-                                      .Include(x => x.Club)
-                                      .Include(x => x.ClubmatesUser)
-                                      .Where(x => x.ClubmatesUser != null && x.ClubmatesUser.Email == loggedInUserEmail)
-                                      .Where(x => x.Club != null && x.Club.ClubId == clubId)
-                                      .FirstOrDefaultAsync();
-            if (clubAccess != null)
-            {
-                var mainMenuItems = new List<MainMenu>();
-                switch (clubAccess.ClubAccessRole)
-                {
-                    case ClubAccessRole.ClubManager:
-                        {
-                            mainMenuItems.Add(new MainMenu
-                            {
-                                MenuArea = "Club",
-                                MenuController = "Home",
-                                MenuAction = "Index",
-                                MenuTitle = "Club Details",
-                                ClubId = clubId,
-                            });
-                            mainMenuItems.Add(new MainMenu
-                            {
-                                MenuArea = "Club",
-                                MenuController = "ManageClub",
-                                MenuAction = "Index",
-                                MenuTitle = "Manager Club",
-                                ClubId = clubId,
-                            });
-                            break;
-                        }
-                    case ClubAccessRole.ClubMember:
-                        {
-                            mainMenuItems.Add(new MainMenu
-                            {
-                                MenuArea = "Club",
-                                MenuController = "Home",
-                                MenuAction = "Index",
-                                MenuTitle = "Club Details",
-                                ClubId = clubId,
-                            });
-                            mainMenuItems.Add(new MainMenu
-                            {
-                                MenuArea = "Club",
-                                MenuController = "Events",
-                                MenuAction = "Index",
-                                MenuTitle = "Events",
-                                ClubId = clubId,
-                            });
-                            break;
-                        }
-                    case ClubAccessRole.ClubAdmin:
-                        {
-                            mainMenuItems.Add(new MainMenu
-                            {
-                                MenuArea = "Club",
-                                MenuController = "Home",
-                                MenuAction = "Index",
-                                MenuTitle = "Club Details",
-                                ClubId = clubId,
-                            });
-                            break;
-                        }
-                }
-                ViewBag.MainMenuItems = mainMenuItems;
-            }
+            var clubLayout = await _clubLayoutService.PopulateClubLayout(loggedInUserEmail, clubId ?? 0);
+
+            ViewBag.MainMenuItems = clubLayout.MainMenus;
+            ViewBag.ImgSrc = clubLayout.Logo;
+
             var clubViewModel = new CustomerClubViewModel();
             if (club != null)
             {

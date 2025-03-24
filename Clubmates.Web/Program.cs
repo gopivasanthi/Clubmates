@@ -1,4 +1,5 @@
 using Clubmates.Web.AppDbContext;
+using Clubmates.Web.Areas.Club.Services;
 using Clubmates.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,7 @@ builder.Services.AddAuthorizationBuilder()
                                         .RequireClaim(ClaimTypes.Role, "Guest"))
     .AddPolicy("MustbeAGuest", policy => policy.RequireClaim(ClaimTypes.Role, "Guest"));
 
+builder.Services.AddScoped<IClubLayoutService, ClubLayoutService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
