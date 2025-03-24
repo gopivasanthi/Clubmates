@@ -29,7 +29,7 @@ namespace Clubmates.Web.Areas.Club.Controllers
             if (loggedInUserEmail == null)
                 return Redirect("/Account/Login");
 
-            var clubuser = _userManager.FindByEmailAsync(loggedInUserEmail);
+            var clubuser = await _userManager.FindByEmailAsync(loggedInUserEmail);
             if (clubuser == null)
                 return Redirect("/Account/Login");
 
@@ -40,6 +40,26 @@ namespace Clubmates.Web.Areas.Club.Controllers
                                       .Where(x => x.ClubmatesUser != null && x.ClubmatesUser.Email == loggedInUserEmail)
                                       .Where(x => x.Club != null && x.Club.ClubId == clubId)
                                       .FirstOrDefaultAsync();
+            DisplayMainMenu(clubAccess, clubId);
+            await DisplayLogo(clubId);
+            var clubViewModel = new CustomerClubViewModel();
+            if (club != null)
+            {
+                clubViewModel.ClubId = club.ClubId;
+                clubViewModel.ClubName = club.ClubName;
+                clubViewModel.ClubContactNumber = club.ClubContactNumber;
+                clubViewModel.ClubManager = club.ClubManager?.Email;
+                clubViewModel.ClubLogo = club.ClubLogo;
+                clubViewModel.ClubBanner = club.ClubBanner;
+                clubViewModel.ClubBackground = club.ClubBackground;
+                clubViewModel.ClubCategory = club.ClubCategory;
+                clubViewModel.ClubType = club.ClubType;
+            }
+            return View(clubViewModel);
+        }
+        private void DisplayMainMenu(ClubAccess? clubAccess, int? clubId)
+        {
+            if (clubAccess == null) { return; }
             if (clubAccess != null)
             {
                 var mainMenuItems = new List<MainMenu>();
@@ -100,20 +120,17 @@ namespace Clubmates.Web.Areas.Club.Controllers
                 }
                 ViewBag.MainMenuItems = mainMenuItems;
             }
-            var clubViewModel = new CustomerClubViewModel();
-            if (club != null)
+        }
+        private async Task DisplayLogo(int? clubId)
+        {
+            var logo = await _dbContext.Clubs.FindAsync(clubId);
+            if (logo != null)
             {
-                clubViewModel.ClubId = club.ClubId;
-                clubViewModel.ClubName = club.ClubName;
-                clubViewModel.ClubContactNumber = club.ClubContactNumber;
-                clubViewModel.ClubManager = club.ClubManager?.Email;
-                clubViewModel.ClubLogo = club.ClubLogo;
-                clubViewModel.ClubBanner = club.ClubBanner;
-                clubViewModel.ClubBackground = club.ClubBackground;
-                clubViewModel.ClubCategory = club.ClubCategory;
-                clubViewModel.ClubType = club.ClubType;
+                var base64 = Convert.ToBase64String(logo.ClubLogo ?? []);
+                var imgSrc = string.Format("data:image/png;base64,{0}", base64);
+                ViewBag.ImgSrc = imgSrc;
             }
-            return View(clubViewModel);
         }
     }
+
 }
