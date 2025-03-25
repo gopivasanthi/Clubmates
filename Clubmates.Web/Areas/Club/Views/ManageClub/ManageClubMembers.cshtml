@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Clubmates.Web.Areas.Club.Models.ViewModels.ClubMembersViewModel>
+@{
+    ViewBag.Title = "Home";
+    Layout = ViewData["Layout"]?.ToString() ?? "";
+}
+<div class="form-container">
+    @{
+        int clubId = 0;
+    }
+    @if (Model != null && Model.Any())
+    {
+
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        clubId = user?.ClubId ?? 0;
+                        <tr>
+                            <td>@user?.Name</td>
+                            <td>@user?.Email</td>
+                            <td>
+                                <a asp-area="Club"
+                                   asp-controller="ManageClub"
+                                   asp-action="RemoveUser"
+                                   asp-route-clubId="@user?.ClubId"
+                                   asp-route-memberId="@user?.ClubMemberId"
+                                   class="btn btn-danger">Remove from Club</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            No users found
+        </div>
+    }
+    <a asp-area="Club"
+       asp-controller="ManageClub"
+       asp-action="InviteMemberToClub"
+       asp-route-clubId="@clubId"
+       class="btn btn-success mb-3">Invite Member</a>
+</div>

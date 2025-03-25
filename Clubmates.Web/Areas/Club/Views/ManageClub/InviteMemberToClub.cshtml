@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = ViewData["Layout"]?.ToString() ?? "";
+}
+<div class="form-container">
+    <form class="form" asp-area="Club" asp-action="InviteMemberToClub" asp-controller="ManageClub" method="post">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="hidden" name="ClubMemberId" id="ClubMemberId" value="@Model.ClubMemberId" />
+            <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name">
+        </div>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email">
+        </div>
+        <button type="submit" class="btn btn-primary">Invite</button>
+    </form>
+</div>

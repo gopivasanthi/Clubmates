@@ -9,5 +9,9 @@ namespace Clubmates.Web.AppDbContext
     {
         public DbSet<Club> Clubs { get; set; }
         public DbSet<ClubAccess> ClubAccesses { get; set; }
+        public DbSet<ClubEvent> ClubEvents { get; set; }
+        public DbSet<Poll> Polls { get; set; }
+        public DbSet<PollOption> PollOptions { get; set; }
+        public DbSet<PollResponse> PollResponses { get; set; }
     }
 }
