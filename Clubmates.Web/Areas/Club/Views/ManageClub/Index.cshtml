@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = ViewData["Layout"]?.ToString() ?? "";
+}
+<div class="container mt-4">
+    <h1 class="mb-4">Dashboard</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Club Members</h5>
+                    <p class="card-text">Invite or remove club members</p>
+                    <a asp-controller="ManageClub" asp-action="ClubMembers" class="btn btn-primary">Go to Manage Club Members</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Club Events</h5>
+                    <p class="card-text">Add or Modify Club Events</p>
+                    <a asp-controller="ManageClub" asp-action="ManageClubEvents" class="btn btn-primary">Go to Manage Club Events</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Club Polls</h5>
+                    <p class="card-text">Add or Modify Club Polls</p>
+                    <a asp-controller="ManageClub" asp-action="ManageClubPolls" class="btn btn-primary">Go to Manage Club Polls</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

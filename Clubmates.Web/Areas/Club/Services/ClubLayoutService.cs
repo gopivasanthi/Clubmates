@@ -33,7 +33,8 @@ namespace Clubmates.Web.Areas.Club.Services
                 ClubLayout clubLayout = new()
                 {
                     MainMenus = DisplayMainMenu(clubAccess, clubId),
-                    Logo = DisplayLogo(club?.ClubLogo)
+                    Logo = DisplayLogo(club?.ClubLogo),
+                    ClubName = club?.ClubName ?? "",
                 };
                 return clubLayout;
             }
@@ -45,12 +46,12 @@ namespace Clubmates.Web.Areas.Club.Services
                     .Clubs
                     .Include(x => x.ClubManager)
                     .FirstOrDefaultAsync(x => x.ClubId == clubId);
-            return club != null;
+            return club == null;
         }
         public async Task<bool> ValidateClubUser(string? loggedInUserEmail)
         {
             var clubUser =  await _userManager.FindByEmailAsync(loggedInUserEmail ?? "");
-            return clubUser != null;
+            return clubUser == null;
         }
         private static List<MainMenu> DisplayMainMenu(ClubAccess? clubAccess, int? clubId)
         {
@@ -66,7 +67,7 @@ namespace Clubmates.Web.Areas.Club.Services
                                 MenuArea = "Club",
                                 MenuController = "Home",
                                 MenuAction = "Index",
-                                MenuTitle = "Club Details",
+                                MenuTitle = "Details",
                                 ClubId = clubId,
                             });
                             mainMenuItems.Add(new MainMenu
@@ -74,7 +75,7 @@ namespace Clubmates.Web.Areas.Club.Services
                                 MenuArea = "Club",
                                 MenuController = "ManageClub",
                                 MenuAction = "Index",
-                                MenuTitle = "Manager Club",
+                                MenuTitle = "Manage",
                                 ClubId = clubId,
                             });
                             break;
@@ -86,7 +87,7 @@ namespace Clubmates.Web.Areas.Club.Services
                                 MenuArea = "Club",
                                 MenuController = "Home",
                                 MenuAction = "Index",
-                                MenuTitle = "Club Details",
+                                MenuTitle = "Details",
                                 ClubId = clubId,
                             });
                             mainMenuItems.Add(new MainMenu
@@ -106,7 +107,7 @@ namespace Clubmates.Web.Areas.Club.Services
                                 MenuArea = "Club",
                                 MenuController = "Home",
                                 MenuAction = "Index",
-                                MenuTitle = "Club Details",
+                                MenuTitle = "Details",
                                 ClubId = clubId,
                             });
                             break;

@@ -26,7 +26,7 @@ builder.Services.AddIdentity<ClubmatesUser, IdentityRole>(options =>
 }).AddEntityFrameworkStores<AppIdentityDbContext>()
 .AddDefaultTokenProviders();
 
-
+builder.Services.AddScoped<IClubLayoutService, ClubLayoutService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppIdentityDbContext>(options =>
@@ -52,7 +52,7 @@ builder.Services.AddAuthorizationBuilder()
                                         .RequireClaim(ClaimTypes.Role, "Guest"))
     .AddPolicy("MustbeAGuest", policy => policy.RequireClaim(ClaimTypes.Role, "Guest"));
 
-builder.Services.AddScoped<IClubLayoutService, ClubLayoutService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

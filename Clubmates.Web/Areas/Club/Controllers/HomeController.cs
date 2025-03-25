@@ -35,7 +35,7 @@ namespace Clubmates.Web.Areas.Club.Controllers
 
             ViewBag.MainMenuItems = clubLayout.MainMenus;
             ViewBag.ImgSrc = clubLayout.Logo;
-
+            ViewBag.ClubName = clubLayout.ClubName;
             var clubViewModel = new CustomerClubViewModel();
             if (club != null)
             {
