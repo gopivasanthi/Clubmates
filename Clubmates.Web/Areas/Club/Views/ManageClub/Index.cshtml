@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Manage Club";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Dashboard</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Members</h5>
+                    <p class="card-text">Invite new members, remove existing members</p>
+                    <a href="@Url.Action("ManageMembers", "ManageClub")" class="btn btn-primary">Manage Members</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Events</h5>
+                    <p class="card-text">Add, update, remove events.</p>
+                    <a href="@Url.Action("ManageEvents", "ManageClub")" class="btn btn-primary">Manage Events</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Manage Polling</h5>
+                    <p class="card-text">Add, update, remove polls.</p>
+                    <a href="@Url.Action("ManagePolling", "ManageClub")" class="btn btn-primary">Manage Polling</a>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+    </div>
+</div>
